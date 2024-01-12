@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ![Screenshot 1](demo.png)
 
-<video width="320" height="240" controls><source src="demo.mov" type="video/mov"/></video>
+<video width="320" height="240" controls><source src="demo.mov"></video>
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
