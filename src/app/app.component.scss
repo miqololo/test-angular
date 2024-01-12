@@ -1,0 +1,27 @@
+table{
+  border: 1px solid silver;
+  width: 100%;
+  text-align: center;
+}
+.full-filter{
+  width:100%;
+  .filter-part{
+    padding: 10px;
+    border: 1px solid silver;
+    display: flex;
+    alignment: center;
+    justify-content: space-around;
+    width: 100%;
+    .form{
+      display: inline-block;
+      input{
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid silver;
+        margin-left: 10px;
+      }
+    }
+
+  }
+}
+
