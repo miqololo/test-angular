@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {DataElement} from "./models/data-element.model";
+import {ReplaceIdsService} from "./services/replace-ids.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,21 @@ export class AppComponent {
   timerInterval = 1000; // Default value in ms
   arraySize = 10; // Default array size
   private worker: Worker;
+  private observableObject: any;
 
-  constructor() {
+  constructor(private replaceIdService: ReplaceIdsService) {
     this.worker = new Worker(new URL('./app.worker', import.meta.url));
     this.worker.addEventListener('message', ({ data }) => {
-      this.data = this.replaceIds([...this.data, data].slice(-this.arraySize));
+      this.dataChanger([...this.data, data].slice(-this.arraySize));
+    });
+  }
+
+  dataChanger(data: DataElement[]){
+    if(this.observableObject){
+      this.observableObject.unsubscribe();
+    }
+    this.observableObject = this.replaceIdService.replaceIds(data, this.additionalIdsArray).subscribe((data)=>{
+      this.data = data;
     });
   }
 
@@ -31,17 +43,14 @@ export class AppComponent {
 
   async updateAdditionalIds() {
     this.additionalIdsArray = this.additionalIds.split(' ').map((item) => Number(item));
-    await this.worker.postMessage({ type: 'updateAdditionalIds', value: this.additionalIdsArray });
   }
 
-  replaceIds(data: DataElement[]): DataElement[] {
-    return data.map((element, index) => ({
-      ...element,
-      id: this.additionalIdsArray[index] || element.id
-    }));
-  }
+
 
   ngOnDestroy() {
     this.worker.terminate();
+    if(this.observableObject){
+      this.observableObject.unsubscribe();
+    }
   }
 }

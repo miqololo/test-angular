@@ -1,6 +1,6 @@
 // src/app/app.worker.ts
 /// <reference lib="webworker" />
-import { DataElement } from './models/data-element.model';
+import {DataElement} from "./models/data-element.model";
 
 let timerInterval = 1000; // Default value in ms
 let incomeDataSize = 10;
@@ -18,7 +18,6 @@ addEventListener('message', ({ data }) => {
     incomeDataSize = Number(data.value);
   }
 });
-
 function generateMockDataArray() {
   const generateMockDataElement = () => {
     const randomId = (): number => uniqueId++;

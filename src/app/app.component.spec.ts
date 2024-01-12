@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import {DataElement} from "./models/data-element.model";
+import {ReplaceIdsService} from "./services/replace-ids.service";
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -11,6 +12,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [ FormsModule ],
+      providers: [ReplaceIdsService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -20,48 +22,6 @@ describe('AppComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should correctly replace IDs in data array', () => {
-    component.additionalIdsArray = [100, 200, 300];
-    const testData: DataElement[] = [
-      { id:1,
-        int: 1,
-        float: 2,
-        color: 'color',
-        child: [
-          {
-            id:4,
-            color:'3sasa'
-          }
-        ]
-      },
-      { id:1,
-        int: 1,
-        float: 2,
-        color: 'color',
-        child: [
-          {
-            id:4,
-            color:'3sasa'
-          }
-        ]},
-      { id:1,
-        int: 1,
-        float: 2,
-        color: 'color',
-        child: [
-          {
-            id:4,
-            color:'3sasa'
-          }
-        ] },
-    ];
-
-    const replacedData = component.replaceIds(testData);
-    expect(replacedData[0].id).toEqual(100);
-    expect(replacedData[1].id).toEqual(200);
-    expect(replacedData[2].id).toEqual(300);
   });
 
   // Test for updateTimerInterval
